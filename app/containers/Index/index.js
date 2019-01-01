@@ -26,7 +26,7 @@ class Index extends Component {
 		getUser()
 		getForums()
 
-		const currentForum = params.forum || '';
+		const currentForum = params.forum || 'general';
 		updateCurrentForum(currentForum)
 	}
 

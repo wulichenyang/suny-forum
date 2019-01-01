@@ -9,7 +9,7 @@ import {
 const initialState = {
   fetchingForums: false,
   forums: null,
-  currentForum: 'general',
+  currentForum: null,
   error: null
 }
 
