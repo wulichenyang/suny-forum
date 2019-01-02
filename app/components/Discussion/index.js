@@ -21,7 +21,36 @@ class Discussion extends Component {
 
     return (
       <article className='discussion-wrapper'>
-        {`title: ${title}`} <br /> <br />
+        <div className="discussion-inner">
+
+          <h2>
+            <Link to={link}>
+              {title}
+            </Link>
+          </h2>
+
+          <p>
+            <Link>
+              {username}
+            </Link> -
+            <Link>
+              icon: {userGitHandler}
+            </Link>
+          </p>
+          <div className="bottom-wapper">
+            <div className="tags-wrapper">
+              {tags.map(tag=>(<span>{tag}</span>))}
+            </div>
+            <div className="details-wrapper">
+              <span className="detail">{date}</span>
+              <span className="detail">{likeCount} 喜欢</span>
+              <span className="detail">{opinionCount} 回复</span>
+            </div>
+          </div>
+          
+        </div>
+{/* 
+        {`title: ${title}`}
         {`content: ${content}`} <br /> <br />
         {`username: ${username}`} <br /> <br />
         {`userGitHandler: ${userGitHandler}`} <br /> <br />
@@ -30,7 +59,7 @@ class Discussion extends Component {
         {`tags: ${tags}`} <br /> <br />
         {`likeCount: ${likeCount}`} <br /> <br />
         {`link: ${link}`} <br /> <br />
-        }
+        } */}
       </article>
     )
   }
