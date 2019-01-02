@@ -31,7 +31,8 @@ class DiscussionList extends Component {
 
   render() {
     const {
-			discussions,
+      discussions,
+      currentForumSlug
 		} = this.props
 
     return (
@@ -41,7 +42,15 @@ class DiscussionList extends Component {
             return (
               <Discussion
                 key={discussion._id}
-                discussion={discussion}
+                title={discussion.title}
+                content={discussion.content}
+                tags={discussion.tags}
+                date={discussion.date}
+                opinionCount={discussion.opinion_count}
+                username={discussion.user.username}
+                userGitHandler={discussion.user.username}
+                likeCount={discussion.favorites.length}
+                link={`/${currentForumSlug}/discussion/${discussion.discussion_slug}`}
               >
               </Discussion>
             )
