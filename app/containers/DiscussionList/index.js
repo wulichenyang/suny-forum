@@ -9,43 +9,24 @@ import { getDiscussions } from '@actions/discussion'
 import selectedForumSelector from '@selectors/forum'
 
 class DiscussionList extends Component {
-  // componentDidMount() {
-  //   const {
-  //     currentForumSlug,
-  //     getDiscussions,
-  //   } = this.props
-  //   console.log(currentForumSlug)
-  //   getDiscussions(currentForumInfo._id)
-  // }
+  componentDidMount() {
+
+  }
 
   componentWillReceiveProps(nextProp) {
     const {
-      forums,
+      currentForumInfo,
       currentForumSlug,
       getDiscussions,
     } = this.props
-    // if(currentForumSlug === '') {
-    //   getDiscussions(currentForumInfo._id)
-    // }
-    console.log('forums', forums)
-    console.log('currentForumSlug', currentForumSlug)
-    const newForumSlug = nextProp.currentForumSlug
-    const newForums = nextProp.forums
-
-    if (nextProp.forums && nextProp.forums._id) {
-      getDiscussions(nextProp.currentForumInfo._id)
-    } else if (currentForumSlug !== newForumSlug && nextProp.currentForumInfo && nextProp.currentForumInfo._id) {
+    // Index page
+    if (currentForumInfo === null && nextProp.currentForumInfo) {
       getDiscussions(nextProp.currentForumInfo._id)
     }
-  }
-
-  componentDidUpdate() {
-    console.log('this.props.currentForumSlug', this.props.currentForumSlug)
-    console.log('this.props.currentForumInfo', this.props.currentForumInfo)
-    console.log('this.props.forums', this.props.forums)
-    // if(this.props.currentForumSlug === null) {
-    //   getDiscussions(this.props.currentForumInfo._id)
-    // }
+    // Change forum
+    else if (currentForumSlug !== nextProp.currentForumSlug && nextProp.currentForumInfo && nextProp.currentForumInfo._id) {
+      getDiscussions(nextProp.currentForumInfo._id)
+    }
   }
 
   render() {
@@ -55,7 +36,6 @@ class DiscussionList extends Component {
 
     return (
       <section className='discussion-list'>
-        {this.props.currentForumSlug}
         {discussions &&
           discussions.map(discussion => {
             return (
@@ -74,7 +54,6 @@ class DiscussionList extends Component {
 
 const mapStateToProps = (state, ownProps) => ({
   // ... computed data from state and optionally ownProps
-  forums: state.forum.forums,
   currentForumSlug: state.forum.currentForum,
   currentForumInfo: selectedForumSelector(state),
   discussions: state.discussion.discussions,

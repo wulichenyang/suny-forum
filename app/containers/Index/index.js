@@ -15,7 +15,7 @@ import {
 } from '@actions/forum'
 
 class Index extends Component {
-	componentWillMount() {
+	componentDidMount() {
 		const {
       params,
 			getForums,
@@ -30,14 +30,14 @@ class Index extends Component {
 		updateCurrentForum(currentForum)
 	}
 
-	componentDidUpdate() {
+	componentDidUpdate(prevProps) {
 		const {
       params,
 			updateCurrentForum,
 			currentForum
     } = this.props
 
-		if (params.forum !== currentForum) {
+		if (params.forum !== currentForum && prevProps.params.forum !== undefined) {
 			updateCurrentForum(params.forum)
 		}
 	}
@@ -67,7 +67,7 @@ const mapStateToProps = (state, ownProps) => ({
 	// ... computed data from state and optionally ownProps
 	userinfo: state.user,
 	forums: state.forum.forums,
-	currentForum: state.forum.currentForum
+	currentForum: state.forum.currentForum,
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => {
