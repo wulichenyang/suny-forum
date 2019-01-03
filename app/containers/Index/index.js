@@ -5,6 +5,7 @@ import Header from '@components/Header'
 import Footer from '@components/Footer'
 import Loading from '@components/Loading'
 import Error from '@components/Error'
+
 import './index.less'
 
 import {
@@ -54,20 +55,23 @@ class Index extends Component {
 
 		return (
 			<div className='wrapper'>
-				{fetchingForums &&
-					<Loading></Loading>
-				}
+				<Loading
+					loading={fetchingForums}
+				>
+				</Loading>
 				{!fetchingForums && !fetchingForumsError &&
 					<div>
 						<Header
 							forums={forums}
 							currentForum={currentForum}
 						/>
-						<main id="content">
-							{this.props.children}
-						</main>
-						<Footer>Footer</Footer>
 					</div>
+				}
+				<main id="content">
+					{this.props.children}
+				</main>
+				{!fetchingForums && !fetchingForumsError &&
+					<Footer>Footer</Footer>
 				}
 				{fetchingForumsError &&
 					<Error

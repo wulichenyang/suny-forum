@@ -31,7 +31,7 @@ export const getDiscussions = (forumId) => {
     dispatch({ type: START_FETCHING_DISCUSSIONS })
     try {
       const discussions = await getDiscussion()
-      if (discussions && discussions.length > 0) {
+      if (discussions) {
         dispatch({
           type: FETCHING_DISCUSSIONS_SUCCESS,
           payload: discussions

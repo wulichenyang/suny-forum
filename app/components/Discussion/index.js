@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Moment from 'moment';
 import Tag from '@components/Tag'
 import { Link } from 'react-router';
+
 import './index.less'
 class Discussion extends Component {
   render() {
@@ -18,6 +19,9 @@ class Discussion extends Component {
       link,
       // userProfile,
     } = this.props;
+
+    const postTime = Moment(date);
+    const timeDisplay = postTime.from(Moment());
 
     return (
       <article className='discussion-wrapper'>
@@ -49,7 +53,7 @@ class Discussion extends Component {
               ))}
             </div>
             <div className="details-wrapper">
-              <span className="detail">{date}</span>
+              <span className="detail">{timeDisplay}</span>
               <span className="detail">{likeCount} 喜欢</span>
               <span className="detail">{opinionCount} 回复</span>
             </div>
