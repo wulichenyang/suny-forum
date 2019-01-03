@@ -1,6 +1,9 @@
 @import '~@styles/theme.less';
 
 .discussion-wrapper {
+  &:last-child {
+    border-bottom: none;
+  }
   border-bottom: 1px solid @content-title-border;
   .discussion-inner {
     padding: 10px;

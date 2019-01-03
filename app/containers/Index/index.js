@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import Header from '@components/Header'
 import Footer from '@components/Footer'
+import Loading from '@components/Loading'
+import Error from '@components/Error'
 import './index.less'
 
 import {
@@ -45,19 +47,33 @@ class Index extends Component {
 	render() {
 		const {
 			forums,
-			currentForum
+			currentForum,
+			fetchingForums,
+			fetchingForumsError,
 		} = this.props
 
 		return (
 			<div className='wrapper'>
-				<Header
-					forums={forums}
-					currentForum={currentForum}
-				/>
-				<main id="content">
-					{this.props.children}
-				</main>
-				<Footer>Footer</Footer>
+				{fetchingForums &&
+					<Loading></Loading>
+				}
+				{!fetchingForums && !fetchingForumsError &&
+					<div>
+						<Header
+							forums={forums}
+							currentForum={currentForum}
+						/>
+						<main id="content">
+							{this.props.children}
+						</main>
+						<Footer>Footer</Footer>
+					</div>
+				}
+				{fetchingForumsError &&
+					<Error
+						text={fetchingForumsError}
+					></Error>
+				}
 			</div>
 		)
 	}
@@ -66,8 +82,10 @@ class Index extends Component {
 const mapStateToProps = (state, ownProps) => ({
 	// ... computed data from state and optionally ownProps
 	userinfo: state.user,
+	fetchingForums: state.forum.fetchingForums,
 	forums: state.forum.forums,
 	currentForum: state.forum.currentForum,
+	fetchingForumsError: state.forum.error,
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => {

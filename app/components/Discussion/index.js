@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import Moment from 'moment';
+import Tag from '@components/Tag'
 import { Link } from 'react-router';
 import './index.less'
-
 class Discussion extends Component {
   render() {
     const {
@@ -30,16 +30,23 @@ class Discussion extends Component {
           </h2>
 
           <p>
-            <Link>
+            <Link to={`/user/${userGitHandler}`}>
               {username}
             </Link> -
-            <Link>
+            <a target="_blank" href={`https://www.github.com/${userGitHandler}`}>
               icon: {userGitHandler}
-            </Link>
+            </a>
           </p>
+
           <div className="bottom-wapper">
             <div className="tags-wrapper">
-              {tags.map(tag=>(<span>{tag}</span>))}
+              {tags.map((tag, id) => (
+                <Tag
+                  key={id}
+                  text={tag}
+                >
+                </Tag>
+              ))}
             </div>
             <div className="details-wrapper">
               <span className="detail">{date}</span>
@@ -47,9 +54,9 @@ class Discussion extends Component {
               <span className="detail">{opinionCount} 回复</span>
             </div>
           </div>
-          
+
         </div>
-{/* 
+        {/* 
         {`title: ${title}`}
         {`content: ${content}`} <br /> <br />
         {`username: ${username}`} <br /> <br />
@@ -85,8 +92,8 @@ Discussion.propTypes = {
   date: PropTypes.any,
   opinionCount: PropTypes.number,
   tags: PropTypes.array,
-  likeCount: PropTypes.array,
+  likeCount: PropTypes.number,
   link: PropTypes.string,
-
 }
+
 export default Discussion;
