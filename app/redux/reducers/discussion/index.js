@@ -13,7 +13,7 @@ import {
 
 const initialState = {
   fetchingDiscussions: false,
-  discussions: null,
+  discussions: null, // {}
   discussionsError: null,
 
   fetchingPinedDiscussions: false,
@@ -34,10 +34,11 @@ export default (state = initialState, action) => {
       }
     }
     case FETCHING_DISCUSSIONS_SUCCESS: {
+      if(!state.discussions) state.discussions = {}
+      state.discussions[action.payload.forumSlug] = action.payload.discussions
       return {
         ...state,
         fetchingDiscussions: false,
-        discussions: action.payload,
         discussionsError: false,
       }
     }

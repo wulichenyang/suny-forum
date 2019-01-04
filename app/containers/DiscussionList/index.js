@@ -11,22 +11,41 @@ import selectedForumSelector from '@selectors/forum'
 
 class DiscussionList extends Component {
   componentDidMount() {
-
+    const {
+      currentForumInfo,
+      getDiscussions,
+      currentForumSlug,
+      discussions
+    } = this.props
+    // Index page
+    if (currentForumInfo) {
+      // Get discussions if no data
+      if (!discussions || !discussions[currentForumSlug]) {
+        getDiscussions(currentForumInfo._id, currentForumSlug)
+      }
+    }
   }
 
   componentWillReceiveProps(nextProp) {
     const {
+      discussions,
       currentForumInfo,
       currentForumSlug,
       getDiscussions,
     } = this.props
     // Index page
     if (currentForumInfo === null && nextProp.currentForumInfo) {
-      getDiscussions(nextProp.currentForumInfo._id)
+      // Get discussions if no data
+      if (!nextProp.discussions || !nextProp.discussions[nextProp.currentForumSlug]) {
+        getDiscussions(nextProp.currentForumInfo._id, nextProp.currentForumSlug)
+      }
     }
     // Change forum
     else if (currentForumSlug !== nextProp.currentForumSlug && nextProp.currentForumInfo && nextProp.currentForumInfo._id) {
-      getDiscussions(nextProp.currentForumInfo._id)
+      // Get discussions if no data
+      if (!nextProp.discussions || !nextProp.discussions[nextProp.currentForumSlug]) {
+        getDiscussions(nextProp.currentForumInfo._id, nextProp.currentForumSlug)
+      }
     }
   }
 
@@ -43,11 +62,10 @@ class DiscussionList extends Component {
           loading={fetchingDiscussions}
         >
         </Loading>
-
-        {discussions && discussions.length &&
+        {discussions && discussions[currentForumSlug] && discussions[currentForumSlug].length &&
           <section className='discussion-list'>
             {
-              discussions.map(discussion => {
+              discussions[currentForumSlug].map(discussion => {
                 return (
                   <Discussion
                     key={discussion._id}
@@ -67,7 +85,7 @@ class DiscussionList extends Component {
             }
           </section>
         }
-        {discussions && discussions.length === 0 &&
+        {discussions && discussions[currentForumSlug] && discussions[currentForumSlug].length === 0 &&
           <Error
             text={'没有数据...'}
           ></Error>

@@ -23,7 +23,7 @@ import {
  * @param  {String}  sortingMethod       define the sorting method, default is 'date'
  * @return {thunk}
  */
-export const getDiscussions = (forumId) => {
+export const getDiscussions = (forumId, forumSlug) => {
   return async (dispatch, getState) => {
     const sortingMethod = getState().discussion.sortingMethod
     const getDiscussion = discussionApi.fetchDiscussions(forumId, sortingMethod)
@@ -34,7 +34,10 @@ export const getDiscussions = (forumId) => {
       if (discussions) {
         dispatch({
           type: FETCHING_DISCUSSIONS_SUCCESS,
-          payload: discussions
+          payload: {
+            discussions,
+            forumSlug
+          }
         })
       } else {
         dispatch({ type: FETCHING_DISCUSSIONS_FAILURE })
