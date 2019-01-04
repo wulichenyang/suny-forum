@@ -68,15 +68,17 @@ class DiscussionList extends Component {
               discussions[currentForumSlug].map(discussion => {
                 return (
                   <Discussion
+                    forumSlug={discussion.forum.forum_slug}
                     key={discussion._id}
                     title={discussion.title}
                     content={discussion.content}
                     tags={discussion.tags}
                     date={discussion.date}
                     opinionCount={discussion.opinion_count}
-                    username={discussion.user.username}
+                    username={discussion.user.name}
                     userGitHandler={discussion.user.username}
                     likeCount={discussion.favorites.length}
+                    avatarUrl={discussion.user.avatarUrl}
                     link={`/${currentForumSlug}/discussion/${discussion.discussion_slug}`}
                   >
                   </Discussion>

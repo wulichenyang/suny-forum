@@ -3,11 +3,16 @@ import PropTypes from 'prop-types';
 import Moment from 'moment';
 import Tag from '@components/Tag'
 import { Link } from 'react-router';
+import {
+  Avatar,
+  Icon,
+} from 'antd';
 
 import './index.less'
 class Discussion extends Component {
   render() {
     const {
+      forumSlug,
       title,
       content,
       username,
@@ -16,6 +21,7 @@ class Discussion extends Component {
       opinionCount,
       tags,
       likeCount,
+      avatarUrl,
       link,
       // userProfile,
     } = this.props;
@@ -26,6 +32,29 @@ class Discussion extends Component {
     return (
       <article className='discussion-wrapper'>
         <div className="discussion-inner">
+          <div className="top-wrapper">
+            <Link to={`/user/${username}`}>
+              <Avatar
+                src={avatarUrl}
+              >
+              </Avatar>
+            </Link>
+            <div className="user-info-right">
+              <div className="forum-info">
+                <Link to={`/user/${username}`}>
+                  <h3>{username}</h3>
+                </Link>
+                <Link
+                  className="forum-info-bottom"
+                  to={`/${forumSlug}`}
+                >
+                  <span>{forumSlug}</span>
+                </Link>
+                &nbsp;·&nbsp;
+                <span>{timeDisplay}</span>
+              </div>
+            </div>
+          </div>
 
           <h2>
             <Link to={link}>
@@ -34,11 +63,13 @@ class Discussion extends Component {
           </h2>
 
           <p>
-            <Link to={`/user/${userGitHandler}`}>
-              {username}
-            </Link> -
-            <a target="_blank" href={`https://www.github.com/${userGitHandler}`}>
-              icon: {userGitHandler}
+            <a
+              className="github"
+              target="_blank"
+              href={`https://www.github.com/${userGitHandler}`}>
+              <Icon type="github" />
+              &nbsp;
+              {userGitHandler}
             </a>
           </p>
 
@@ -53,7 +84,6 @@ class Discussion extends Component {
               ))}
             </div>
             <div className="details-wrapper">
-              <span className="detail">{timeDisplay}</span>
               <span className="detail">{likeCount} 喜欢</span>
               <span className="detail">{opinionCount} 回复</span>
             </div>
@@ -77,6 +107,7 @@ class Discussion extends Component {
 }
 
 Discussion.defaultProps = {
+  forumSlug: 'general',
   title: '是我标题',
   content: '是我内容',
   username: '大名',
@@ -85,10 +116,12 @@ Discussion.defaultProps = {
   opinionCount: 0,
   tags: ['你好', '再见'],
   likeCount: 0,
-  link: '/'
+  link: '/',
+  avatarUrl: '/',
 }
 
 Discussion.propTypes = {
+  forumSlug: PropTypes.string,
   title: PropTypes.string,
   content: PropTypes.string,
   username: PropTypes.string,
@@ -98,6 +131,7 @@ Discussion.propTypes = {
   tags: PropTypes.array,
   likeCount: PropTypes.number,
   link: PropTypes.string,
+  avatarUrl: PropTypes.string,
 }
 
 export default Discussion;
