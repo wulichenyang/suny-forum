@@ -13,6 +13,7 @@ export const GET = 'GET';
 export const POST = 'POST';
 export const UPDATE = 'UPDATE';
 export const PUT = 'PUT';
+export const DELETE = 'DELETE';
 
 /** 
  * 跳转登录页
@@ -141,6 +142,8 @@ export default (url, method = GET) => {
         res = await instance.post(`${url}${appendToUrl.join('')}`, data)
       } else if (method === PUT) {
         res = await instance.put(`${url}${appendToUrl.join('')}`, data)
+      } else if (method === DELETE) {
+        res = await instance.delete(`${url}${appendToUrl.join('')}`)
       }
       return res;
     } catch (error) {

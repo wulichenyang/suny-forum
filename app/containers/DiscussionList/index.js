@@ -2,12 +2,12 @@ import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import Discussion from '@components/Discussion'
-import './index.less'
 import Loading from '@components/Loading'
 import Error from '@components/Error'
 import { getDiscussions } from '@actions/discussion'
 
 import selectedForumSelector from '@selectors/forum'
+import './index.less'
 
 class DiscussionList extends Component {
   componentDidMount() {

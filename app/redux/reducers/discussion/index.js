@@ -12,7 +12,7 @@ import {
 } from '../../actionTypes';
 
 const initialState = {
-  fetchingDiscussions: false,
+  fetchingDiscussions: true,
   discussions: null, // {}
   discussionsError: null,
 
