@@ -16,7 +16,7 @@ class DiscussionDetail extends Component {
 		const {
 			params: {
 				forum,
-				discussion
+			discussion
 			},
 			getDiscussionDetail
 		} = this.props
@@ -25,6 +25,10 @@ class DiscussionDetail extends Component {
 	}
 	render() {
 		const {
+			params: {
+				forum,
+				discussion
+			},
 			discussionDetail,
 			fetchingDiscussionDetail,
 			fetchingDiscussionDetailError,
@@ -32,9 +36,34 @@ class DiscussionDetail extends Component {
 
 		return (
 			<div className="discussion-detail">
-				<DiscussionContentDetail></DiscussionContentDetail>
+				{discussionDetail && discussionDetail[discussion] &&
+					<DiscussionContentDetail
+						key={discussionDetail[discussion]._id}
+						forumSlug={discussionDetail[discussion].forum.forum_slug}
+						title={discussionDetail[discussion].title}
+						content={discussionDetail[discussion].content}
+						tags={discussionDetail[discussion].tags}
+						date={discussionDetail[discussion].date}
+						username={discussionDetail[discussion].user.name}
+						userGitHandler={discussionDetail[discussion].user.username}
+						likeCount={discussionDetail[discussion].favorites.length}
+						avatarUrl={discussionDetail[discussion].user.avatarUrl}
+					/*favoriteAction={toggleFavorite}
+					userFavorited={userFavorited}
+					toggleingFavorite={toggleingFavorite}
+					allowDelete={allowDelete}
+					deletingDiscussion={deletingDiscussion}
+					deleteAction={this.deleteDiscussion.bind(this)}*/
+					></DiscussionContentDetail>
+				}
 				<ReplyBox></ReplyBox>
-				<OpinionList></OpinionList>
+				{discussionDetail && discussionDetail[discussion] && discussionDetail[discussion].opinions && discussionDetail[discussion].opinions.length &&
+					<OpinionList
+						opinions={discussionDetail[discussion].opinions}
+						deleteAction={() => { alert('delete option') }}
+					// deletingOption={this.props.deletingOption}
+					></OpinionList>
+				}
 			</div>
 		)
 	}
