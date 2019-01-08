@@ -1,0 +1,29 @@
+@import '~@styles/theme.less';
+
+.user-brief {
+  display: flex;
+  align-items: center;
+  a span {
+    transition: ease-in .15s;
+  }
+  a span:hover {
+    & {
+      transition: ease-in .15s;
+      transform: scale(1.1);
+    }
+  }
+  .username{
+    font-weight: 700;
+    color: @banner-gray;
+  }
+  .username, .github {
+    margin-left: 10px;
+  }
+  .github {
+    margin-bottom: 3px;
+  }
+  .github {
+    display: flex;
+    align-items: center;
+  }
+}

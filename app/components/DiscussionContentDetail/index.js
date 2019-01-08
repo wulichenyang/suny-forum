@@ -7,11 +7,9 @@ import Moment from 'moment';
 // import Error from '@components/Error'
 import Tag from '@components/Tag'
 import BoxWrapper from '@components/BoxWrapper'
+import UserBrief from '@components/UserBrief'
 import { Link } from 'react-router';
-import {
-  Avatar,
-  Icon,
-} from 'antd';
+
 import './index.less'
 
 class DiscussionContentDetail extends Component {
@@ -37,34 +35,38 @@ class DiscussionContentDetail extends Component {
     const postTime = Moment(date);
     const timeDisplay = postTime.from(Moment());
 
+    const userInfo = ({
+      avatarUrl,
+      username,
+      userGitHandler,
+      timeDisplay
+    }) => {
+      return (
+        <div className="user-info">
+          <UserBrief
+            avatarUrl={avatarUrl}
+            username={username}
+            githubHandler={userGitHandler}
+          >
+          </UserBrief>
+
+          <div className="user-right-date">
+            <span>{timeDisplay}</span>
+          </div>
+        </div>
+      )
+    }
+
     return (
       <section id="discussion-content-detail">
-        <BoxWrapper>
-          <div className="user-info">
-            <div className="user-top-left">
-              <Link>
-                <Avatar
-                  src={avatarUrl}
-                >
-                </Avatar>
-                <span className="username">{username}</span>
-              </Link>
-
-              <a
-                className="github"
-                target="_blank"
-                href={`https://www.github.com/${userGitHandler}`}
-              >
-                <Icon type="github" />
-                &nbsp;
-                {userGitHandler}
-              </a>
-            </div>
-            <div className="user-right-date">
-              <span>{timeDisplay}</span>
-            </div>
-          </div>
-
+        <BoxWrapper
+          header={userInfo({
+            avatarUrl,
+            username,
+            userGitHandler,
+            timeDisplay
+          })}
+        >
         </BoxWrapper>
       </section >
     )

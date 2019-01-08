@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types';
 import Moment from 'moment';
 import Tag from '@components/Tag'
@@ -30,8 +30,13 @@ class Discussion extends Component {
     const postTime = Moment(date);
     const timeDisplay = postTime.from(Moment());
 
-    return (
-      <BoxWrapper>
+    const userInfo = ({
+      username,
+      avatarUrl,
+      forumSlug,
+      timeDisplay
+    }) => {
+      return (
         <div className="top-wrapper">
           <Link to={`/user/${username}`}>
             <Avatar
@@ -55,52 +60,84 @@ class Discussion extends Component {
             </div>
           </div>
         </div>
+      )
+    }
 
-        <h2>
-          <Link to={link}>
-            {title}
-          </Link>
-        </h2>
+    const discussionBrief = ({
+      link,
+      title,
+      userGitHandler,
+      tags,
+      likeCount,
+      opinionCount,
+    }) => {
+      return (
+        <Fragment>
+          <h2>
+            <Link to={link}>
+              {title}
+            </Link>
+          </h2>
 
-        <p>
-          <a
-            className="github"
-            target="_blank"
-            href={`https://www.github.com/${userGitHandler}`}
-          >
-            <Icon type="github" />
-            &nbsp;
+          <p>
+            <a
+              className="github"
+              target="_blank"
+              href={`https://www.github.com/${userGitHandler}`}
+            >
+              <Icon type="github" />
+              &nbsp;
               {userGitHandler}
-          </a>
-        </p>
+            </a>
+          </p>
 
-        <div className="bottom-wapper">
-          <div className="tags-wrapper">
-            {tags.map((tag, id) => (
-              <Tag
-                key={id}
-                text={tag}
-              >
-              </Tag>
-            ))}
+          <div className="bottom-wapper">
+            <div className="tags-wrapper">
+              {tags.map((tag, id) => (
+                <Tag
+                  key={id}
+                  text={tag}
+                >
+                </Tag>
+              ))}
+            </div>
+            <div className="details-wrapper">
+              <span className="detail">{likeCount} 喜欢</span>
+              <span className="detail">{opinionCount} 回复</span>
+            </div>
           </div>
-          <div className="details-wrapper">
-            <span className="detail">{likeCount} 喜欢</span>
-            <span className="detail">{opinionCount} 回复</span>
-          </div>
-        </div>
+        </Fragment>
+      )
+    }
+
+    return (
+      <BoxWrapper
+        header={userInfo({
+          username,
+          avatarUrl,
+          forumSlug,
+          timeDisplay
+        })}
+        content={discussionBrief({
+          link,
+          title,
+          userGitHandler,
+          tags,
+          likeCount,
+          opinionCount,
+        })}>
       </BoxWrapper>
-    /* 
-        {`title: ${title}`}
-        {`content: ${content}`} <br /> <br />
-        {`username: ${username}`} <br /> <br />
-        {`userGitHandler: ${userGitHandler}`} <br /> <br />
-        {`date: ${date}`} <br /> <br />
-        {`opinionCount: ${opinionCount}`} <br /> <br />
-        {`tags: ${tags}`} <br /> <br />
-        {`likeCount: ${likeCount}`} <br /> <br />
-        {`link: ${link}`} <br /> <br />
-        } */
+      /* 
+          {`title: ${title}`}
+          {`content: ${content}`} <br /> <br />
+          {`username: ${username}`} <br /> <br />
+          {`userGitHandler: ${userGitHandler}`} <br /> <br />
+          {`date: ${date}`} <br /> <br />
+          {`opinionCount: ${opinionCount}`} <br /> <br />
+          {`tags: ${tags}`} <br /> <br />
+          {`likeCount: ${likeCount}`} <br /> <br />
+          {`link: ${link}`} <br /> <br />
+          } */
     )
   }
 }
