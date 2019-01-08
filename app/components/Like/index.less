@@ -1,0 +1,20 @@
+@import '~@styles/theme.less';
+
+.like-wrapper {
+  display: flex;
+  align-items: center;
+  .like-inner {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    &:hover {
+      i {
+        color: @button-pink;
+      }
+    }
+    span {
+      margin-left: 5px;
+      margin-top: -1px;
+    }
+  }
+}

@@ -8,6 +8,7 @@ import Moment from 'moment';
 import Tag from '@components/Tag'
 import BoxWrapper from '@components/BoxWrapper'
 import UserBrief from '@components/UserBrief'
+import Like from '@components/Like'
 import { Link } from 'react-router';
 
 import './index.less'
@@ -56,7 +57,30 @@ class DiscussionContentDetail extends Component {
         </div>
       )
     }
-
+    const DiscussionContent = ({
+      tags,
+      favoriteAction
+    }) => {
+      return (
+        <div className="discussion-bottom">
+          <div>
+            {
+              tags.map((tag, i) => {
+                return (
+                  <Tag
+                    key={i}
+                    text={tag}
+                  ></Tag>
+                )
+              })
+            }
+          </div>
+          <Like
+            favoriteAction={favoriteAction}
+          ></Like>
+        </div>
+      )
+    }
     return (
       <section id="discussion-content-detail">
         <BoxWrapper
@@ -65,6 +89,9 @@ class DiscussionContentDetail extends Component {
             username,
             userGitHandler,
             timeDisplay
+          })}
+          content={DiscussionContent({
+            tags
           })}
         >
         </BoxWrapper>
