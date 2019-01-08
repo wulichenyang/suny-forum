@@ -36,6 +36,7 @@ class DiscussionContentDetail extends Component {
     const postTime = Moment(date);
     const timeDisplay = postTime.from(Moment());
 
+    // Header
     const userInfo = ({
       avatarUrl,
       username,
@@ -57,6 +58,8 @@ class DiscussionContentDetail extends Component {
         </div>
       )
     }
+
+    // Content
     const DiscussionContent = ({
       tags,
       favoriteAction
@@ -81,6 +84,8 @@ class DiscussionContentDetail extends Component {
         </div>
       )
     }
+
+    // Main render()
     return (
       <section id="discussion-content-detail">
         <BoxWrapper

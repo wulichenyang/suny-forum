@@ -1,0 +1,20 @@
+@import '~@styles/theme.less';
+
+.delete-wrapper {
+  display: flex;
+  align-items: center;
+  .delete-inner {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    &:hover {
+      i {
+        color: @button-pink;
+      }
+    }
+    span {
+      margin-left: 5px;
+      margin-top: -1px;
+    }
+  }
+}

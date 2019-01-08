@@ -31,7 +31,7 @@ Like.defaultProps = {
 }
 
 Like.propTypes = {
-  text: PropTypes.func,
+  favoriteAction: PropTypes.func,
 }
 
 export default Like
