@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import OpinionList from '@components/OpinionList'
 import ReplyBox from '@components/ReplyBox'
+import RichEditor from '@components/RichEditor'
 import DiscussionContentDetail from '@components/DiscussionContentDetail'
 
 import {
@@ -60,6 +61,10 @@ class DiscussionDetail extends Component {
 				{ /* reply box */}
 				<ReplyBox
 					style={{ width: '60%', margin: "0 auto" }}
+					title="评论"
+					content={
+						<RichEditor></RichEditor>
+					}
 				></ReplyBox>
 
 				{discussionDetail && discussionDetail[discussion] && discussionDetail[discussion].opinions && discussionDetail[discussion].opinions.length &&

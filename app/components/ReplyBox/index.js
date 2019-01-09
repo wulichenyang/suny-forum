@@ -18,7 +18,9 @@ class ReplyBox extends Component {
 
   render() {
     const {
-      style
+      style,
+      title,
+      content
 		} = this.props
 
     return (
@@ -27,6 +29,8 @@ class ReplyBox extends Component {
       >
         <BoxWrapper
           style={{marginTop: '20px'}}
+          header={title}
+          content={content}
         >
         </BoxWrapper>
       </section>

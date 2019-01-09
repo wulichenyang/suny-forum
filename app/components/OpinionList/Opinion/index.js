@@ -6,6 +6,7 @@ import Moment from 'moment';
 import Loading from '@components/Loading'
 import BoxWrapper from '@components/BoxWrapper'
 import UserBrief from '@components/UserBrief'
+import RichEditor from '@components/RichEditor'
 import Error from '@components/Error'
 import { toPostTime } from '@utils/date';
 
@@ -54,10 +55,14 @@ class Opinion extends Component {
       content
     }) => {
       return (
-        <div>{content}</div>
+        <RichEditor
+          content={content}
+          editable={false}
+        ></RichEditor>
       )
     }
 
+    // Main render()
     return (
       <article className="opinion">
         <BoxWrapper

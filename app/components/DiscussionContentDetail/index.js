@@ -8,6 +8,7 @@ import Moment from 'moment';
 import Tag from '@components/Tag'
 import BoxWrapper from '@components/BoxWrapper'
 import UserBrief from '@components/UserBrief'
+import RichEditor from '@components/RichEditor'
 import Like from '@components/Like'
 import { Link } from 'react-router';
 import { toPostTime } from '@utils/date';
@@ -44,7 +45,7 @@ class DiscussionContentDetail extends Component {
       timeDisplay
     }) => {
       return (
-        <div className="user-info">
+        <section className="user-info">
           <UserBrief
             avatarUrl={avatarUrl}
             username={username}
@@ -56,33 +57,48 @@ class DiscussionContentDetail extends Component {
           <div className="user-right-date">
             <span>{timeDisplay}</span>
           </div>
-        </div>
+        </section>
       )
     }
 
     // Content
     const DiscussionContent = ({
       tags,
-      favoriteAction
+      discussionTitle,
+      content
+
+      // favoriteAction
     }) => {
       return (
-        <div className="discussion-bottom">
-          <div>
-            {
-              tags.map((tag, i) => {
-                return (
-                  <Tag
-                    key={i}
-                    text={tag}
-                  ></Tag>
-                )
-              })
-            }
-          </div>
-          <Like
-            favoriteAction={favoriteAction}
-          ></Like>
-        </div>
+        <Fragment>
+          <section className="discussion-content">
+            <h2>
+              {discussionTitle}
+            </h2>
+            <RichEditor
+              content={content}
+              editable={false}
+            ></RichEditor>
+          </section>
+
+          <section className="discussion-bottom">
+            <div>
+              {
+                tags.map((tag, i) => {
+                  return (
+                    <Tag
+                      key={i}
+                      text={tag}
+                    ></Tag>
+                  )
+                })
+              }
+            </div>
+            <Like
+              favoriteAction={favoriteAction}
+            ></Like>
+          </section>
+        </Fragment>
       )
     }
 
@@ -99,9 +115,11 @@ class DiscussionContentDetail extends Component {
             timeDisplay
           })}
           content={DiscussionContent({
-            tags
+            discussionTitle: title,
+            tags,
+            content
           })}
-          style={{marginTop: '20px'}}
+          style={{ marginTop: '20px' }}
         >
         </BoxWrapper>
 
