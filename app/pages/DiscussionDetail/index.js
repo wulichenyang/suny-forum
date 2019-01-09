@@ -27,7 +27,7 @@ class DiscussionDetail extends Component {
 		const {
 			params: {
 				forum,
-				discussion
+			discussion
 			},
 			discussionDetail,
 			fetchingDiscussionDetail,
@@ -56,9 +56,15 @@ class DiscussionDetail extends Component {
 					deleteAction={this.deleteDiscussion.bind(this)}*/
 					></DiscussionContentDetail>
 				}
-				<ReplyBox></ReplyBox>
+
+				{ /* reply box */}
+				<ReplyBox
+					style={{ width: '60%', margin: "0 auto" }}
+				></ReplyBox>
+
 				{discussionDetail && discussionDetail[discussion] && discussionDetail[discussion].opinions && discussionDetail[discussion].opinions.length &&
 					<OpinionList
+						style={{ width: '60%', margin: "20px auto 0 auto" }}
 						opinions={discussionDetail[discussion].opinions}
 						deleteAction={() => { alert('delete option') }}
 					// deletingOption={this.props.deletingOption}

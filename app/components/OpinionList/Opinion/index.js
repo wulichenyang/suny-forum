@@ -4,9 +4,12 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import Moment from 'moment';
 import Loading from '@components/Loading'
+import BoxWrapper from '@components/BoxWrapper'
+import UserBrief from '@components/UserBrief'
 import Error from '@components/Error'
-import './index.less'
+import { toPostTime } from '@utils/date';
 
+import './index.less'
 class Opinion extends Component {
   render() {
     const {
@@ -23,14 +26,53 @@ class Opinion extends Component {
       // deletingOpinion,
     } = this.props
 
+    const timeDisplay = toPostTime(date)
+
+    // Opinion header
+    const opinionHeader = ({
+      avatarUrl,
+      username,
+      githubHandler,
+      timeDisplay,
+    }) => {
+      return (
+        <div className="opinion-header">
+          <UserBrief
+            avatarUrl={avatarUrl}
+            username={username}
+            githubHandler={userGitHandler}
+          ></UserBrief>
+          <div className="date">
+            <span>{timeDisplay}</span>
+          </div>
+        </div>
+      )
+    }
+
+    // Opinion content
+    const opinionContent = ({
+      content
+    }) => {
+      return (
+        <div>{content}</div>
+      )
+    }
+
     return (
       <article className="opinion">
+        <BoxWrapper
+          header={opinionHeader({
+            avatarUrl,
+            username,
+            userGitHandler,
+            timeDisplay,
+          })}
+          content={opinionContent({
+            content
+          })}
+        >
+        </BoxWrapper>
         opinionId:    {opinionId} <br /><br />
-        content:    {content} <br /><br />
-        username:    {username} <br /><br />
-        userGitHandler:    {userGitHandler} <br /><br />
-        date:    {date} <br /><br />
-        avatarUrl:    {avatarUrl} <br /><br />
         userId:    {userId} <br /><br />
         currentUserId:    {currentUserId} <br /><br />
         currentUserRole:    {currentUserRole} <br /><br />

@@ -12,10 +12,14 @@ class OpinionList extends Component {
     const {
       opinions,
       // deleteAction,
-      // deletingOpinion
+      // deletingOpinion,
+      style,
     } = this.props
     return (
-      <section className="opinion-list">
+      <section
+        className="opinion-list"
+        style={style}
+      >
         {opinions &&
           opinions.map(opinion => {
             return (
@@ -38,7 +42,6 @@ class OpinionList extends Component {
           })
         }
       </section>
-
     )
   }
 }

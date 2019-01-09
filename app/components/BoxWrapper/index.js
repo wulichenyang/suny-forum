@@ -5,7 +5,10 @@ import './index.less'
 class BoxWrapper extends Component {
   render() {
     return (
-      < article className='box-wrapper' >
+      < article
+        className='box-wrapper'
+        style={this.props.style}
+      >
         <div className="box-inner">
           <section className="box-header">
             {this.props.header}
@@ -21,12 +24,14 @@ class BoxWrapper extends Component {
 
 BoxWrapper.defaultProps = {
   header: (<div>title</div>),
-  content: (<div>content</div>)
+  content: (<div>content</div>),
+  style: {}
 }
 
 BoxWrapper.propTypes = {
   content: PropTypes.any,
   content: PropTypes.any,
+  style: PropTypes.object
 }
 
 

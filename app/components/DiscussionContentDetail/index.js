@@ -10,6 +10,7 @@ import BoxWrapper from '@components/BoxWrapper'
 import UserBrief from '@components/UserBrief'
 import Like from '@components/Like'
 import { Link } from 'react-router';
+import { toPostTime } from '@utils/date';
 
 import './index.less'
 
@@ -33,8 +34,7 @@ class DiscussionContentDetail extends Component {
       deleteAction,
 		} = this.props
 
-    const postTime = Moment(date);
-    const timeDisplay = postTime.from(Moment());
+    const timeDisplay = toPostTime(date)
 
     // Header
     const userInfo = ({
@@ -49,6 +49,7 @@ class DiscussionContentDetail extends Component {
             avatarUrl={avatarUrl}
             username={username}
             githubHandler={userGitHandler}
+            avatarSize="large"
           >
           </UserBrief>
 
@@ -88,6 +89,8 @@ class DiscussionContentDetail extends Component {
     // Main render()
     return (
       <section id="discussion-content-detail">
+
+        { /* user detail */}
         <BoxWrapper
           header={userInfo({
             avatarUrl,
@@ -98,8 +101,10 @@ class DiscussionContentDetail extends Component {
           content={DiscussionContent({
             tags
           })}
+          style={{marginTop: '20px'}}
         >
         </BoxWrapper>
+
       </section >
     )
   }

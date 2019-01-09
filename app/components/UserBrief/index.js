@@ -12,14 +12,15 @@ class UserBrief extends Component {
     const {
       avatarUrl,
       username,
-      githubHandler
+      githubHandler,
+      avatarSize
 		} = this.props
 
     return (
       <div className="user-brief">
         <Link to={`/user/${username}`}>
           <Avatar
-            size="large"
+            size={avatarSize}
             src={avatarUrl}
           >
           </Avatar>
@@ -43,13 +44,15 @@ class UserBrief extends Component {
 UserBrief.defaultProps = {
   avartarUrl: '/',
   username: '大名',
-  githubHandler: 'github'
+  githubHandler: 'github',
+  avatarSize: 'default'
 }
 
 UserBrief.propTypes = {
   avartarUrl: PropTypes.string,
   username: PropTypes.string,
   githubHandler: PropTypes.string,
+  avatarSize: PropTypes.string,
 }
 
 export default UserBrief
