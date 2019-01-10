@@ -77,7 +77,7 @@ class DiscussionContentDetail extends Component {
             </h2>
             <RichEditor
               content={content}
-              editable={false}
+              readOnly={true}
             ></RichEditor>
           </section>
 

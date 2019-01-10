@@ -63,7 +63,7 @@ class DiscussionDetail extends Component {
 					style={{ width: '60%', margin: "0 auto" }}
 					title="评论"
 					content={
-						<RichEditor></RichEditor>
+						<RichEditor readOnly={false}></RichEditor>
 					}
 				></ReplyBox>
 

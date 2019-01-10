@@ -21,14 +21,15 @@ class ReplyBox extends Component {
       style,
       title,
       content
-		} = this.props
+    } = this.props
 
     return (
-      <section className="reply-box"
+      <section
+        className="reply-box"
         style={style}
       >
         <BoxWrapper
-          style={{marginTop: '20px'}}
+          style={{ marginTop: '20px' }}
           header={title}
           content={content}
         >
