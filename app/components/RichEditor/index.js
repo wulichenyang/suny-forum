@@ -17,7 +17,7 @@ class RichEditor extends Component {
     super(props);
     this.state = { editorState: EditorState.createEmpty() };
     this.focus = () => this.refs.editor.focus();
-    this.onChange = (editorState) => this.setState({ editorState });
+    this.onChange = this._onChange.bind(this);
     this.handleKeyCommand = this._handleKeyCommand.bind(this);
     this.mapKeyToEditorCommand = this._mapKeyToEditorCommand.bind(this);
     this.toggleBlockType = this._toggleBlockType.bind(this);
@@ -25,8 +25,13 @@ class RichEditor extends Component {
   }
 
   // For reply
+  _onChange(editorState) {
+    this.setState({ editorState });
+
+  }
+
   onSubmit() {
-    console.log(this.state.editorState)
+    console.log(JSON.stringify(convertToRaw(this.state.editorState.getCurrentContent())))
   }
 
   // For RichEditor
