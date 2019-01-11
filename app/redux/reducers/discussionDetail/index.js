@@ -25,19 +25,24 @@ import {
 } from '../../actionTypes';
 
 const initialState = {
+  // fetching discussionDetail
   fetchingDiscussionDetail: true,
   discussionDetail: null,
   fetchingDiscussionDetailError: null,
 
+  // favorite
   togglingFavorite: false,
 
+  // post a new Opinion
   postingOpinion: false,
   newOpinion: null,
   postOpinionError: null,
 
+  // delete a discussion
   deletingDiscussion: false,
   isDiscussionDeleted: false,
 
+  // delete an opinion
   deletedOpinion: null,
 };
 
@@ -84,12 +89,11 @@ export default (state = initialState, action) => {
       }
     }
 
-    // Update opinions
+    // Update newOpinion when entering.
     case UPDATE_OPINION_CONTENT: {
-      if (!state.opinions) state.opinions = {}
-      state.opinions[action.payload.discussionSlug] = action.payload.opinions
       return {
         ...state,
+        newOpinion: action.payload
       }
     }
 

@@ -17,8 +17,8 @@ export const deleteDiscussion = (discussionSlug) => {
   return api(`${baseUrl.dev}/discussion/deleteDiscussion/${discussionSlug}`, DELETE);
 };
 
-export const addOpinion = (opinion) => {
-  return api(`${baseUrl.dev}/opinion/newOpinion`, POST, opinion);
+export const addOpinion = () => {
+  return api(`${baseUrl.dev}/opinion/newOpinion`, POST);
 };
 
 export const deleteOpinion = (opinionId) => {

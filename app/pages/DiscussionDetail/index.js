@@ -7,7 +7,9 @@ import RichEditor from '@components/RichEditor'
 import DiscussionContentDetail from '@components/DiscussionContentDetail'
 
 import {
-	getDiscussionDetail
+	getDiscussionDetail,
+	updateOpinionContent,
+	addOpinion,
 } from '@actions/discussionDetail'
 
 import './index.less'
@@ -17,22 +19,45 @@ class DiscussionDetail extends Component {
 		const {
 			params: {
 				forum,
-			discussion
+				discussion
 			},
 			getDiscussionDetail
 		} = this.props
 
 		getDiscussionDetail(discussion)
 	}
+
+	submitNewOpinion() {
+		const {
+			newOpinionContent,
+			discussionDetail,
+			addOpinion,
+			params: {
+				discussion
+			},
+		} = this.props
+
+		const newOpinion = {
+			forum_id: discussionDetail[discussion].forum._id,
+			discussion_id: discussionDetail[discussion]._id,
+			// TODU
+			user_id: '5c24f47f72e93f8b02824959',
+			content: newOpinionContent
+		}
+		console.log(newOpinion, discussion)
+		addOpinion(newOpinion, discussion)
+	}
+
 	render() {
 		const {
 			params: {
 				forum,
-			discussion
+				discussion
 			},
 			discussionDetail,
 			fetchingDiscussionDetail,
 			fetchingDiscussionDetailError,
+			updateOpinionContent,
 		} = this.props
 
 		return (
@@ -63,7 +88,11 @@ class DiscussionDetail extends Component {
 					style={{ width: '60%', margin: "0 auto" }}
 					title="评论"
 					content={
-						<RichEditor readOnly={false}></RichEditor>
+						<RichEditor
+							readOnly={false}
+							onChange={(content) => { updateOpinionContent(content) }}
+							onSubmit={() => this.submitNewOpinion()}
+						></RichEditor>
 					}
 				></ReplyBox>
 
@@ -83,9 +112,16 @@ class DiscussionDetail extends Component {
 
 const mapStateToProps = (state, ownProps) => ({
 	// ... computed data from state and optionally ownProps
+	// fetching discussionDetail
 	fetchingDiscussionDetail: state.discussionDetail.fetchingDiscussionDetail,
 	discussionDetail: state.discussionDetail.discussionDetail,
 	fetchingDiscussionDetailError: state.discussionDetail.fetchingDiscussionDetailError,
+
+	// post a new opinion
+	postingOpinion: state.discussionDetail.postingOpinion,
+	newOpinionContent: state.discussionDetail.newOpinion,
+	postOpinionError: state.discussionDetail.postOpinionError,
+
 
 	// currentForumSlug: state.forum.currentForum,
 	// currentForumInfo: selectedForumSelector(state),
@@ -96,7 +132,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 	return {
 		// dispatching plain actions
 		...bindActionCreators({
-			getDiscussionDetail,
+			getDiscussionDetail, updateOpinionContent, addOpinion,
 		}, dispatch)
 	};
 }

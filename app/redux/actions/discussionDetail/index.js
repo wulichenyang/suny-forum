@@ -37,7 +37,6 @@ export const getDiscussionDetail = (discussionSlug) => {
   return async (dispatch, getState) => {
     dispatch({ type: FETCHING_DISCUSSIONS_DETAIL_START })
     try {
-      console.debug
       const fetchDiscussionDetail = discussionDetailApi.fetchDiscussionDetail(discussionSlug)
       let discussionDetail = await fetchDiscussionDetail()
       if (discussionDetail && discussionDetail._id) {
@@ -93,52 +92,76 @@ export const toggleFavorite = (discussionId, discussionSlug) => {
   }
 }
 
-// /**
-//  * update opinion content in redux state (controlled input)
-//  * @param  {Object} value
-//  * @return {action}
-//  */
-// export const updateOpinionContent = (value) => {
-//   return {
-//     type: UPDATE_OPINION_CONTENT,
-//     payload: value,
-//   };
-// };
+/**
+ * update reply content in redux state (controlled input)
+ * @param  {Object} opinionContent
+ * @return {action}
+ */
+export const updateOpinionContent = (opinionContent) => {
+  return {
+    type: UPDATE_OPINION_CONTENT,
+    payload: opinionContent,
+  };
+};
 
-// /**
-//  * post an opinion
-//  * @param  {Object} opinion
-//  * @param  {String} discussionSlug
-//  * @return {action}
-//  */
-// export const addOpinion = (opinion, discussionSlug) => {
-//   return async (dispatch, getState) => {
-//     // dispatch to show the posting message
-//     dispatch({ type: POSTING_OPINION_START });
+/**
+ * post an opinion
+ * @param  {Object} opinion
+ * @param  {String} discussionSlug
+ * @return {action}
+ */
+export const addOpinion = (opinion, discussionSlug) => {
+  return async (dispatch, getState) => {
+    // dispatch to show the posting message
+    dispatch({ type: POSTING_OPINION_START });
 
-//     // validate the opinion
-//     if (!opinion.content || opinion.content.length < 10) {
-//       dispatch({ type: POSTING_OPINION_FAILURE, payload: 'Please provide more info in your opinion....at least 10 characters.' });
-//     } else {
-//       // call the api to post the opinion
-//       try {
-//         let opinionRes = await discussionDetailApi.addOpinion(opinion)
-//         if (opinionRes && opinionRes.data && opinionRes.data._id) {
-//           // fetch the discussion to refresh the opinion list
-//           let discussionDedail = await fetchDiscussionDetail(discussionSlug)
-
-//           data => {
-//             dispatch({ type: FETCHING_SINGLE_DISC_SUCCESS, payload: data.data });
-//             dispatch({ type: POSTING_OPINION_SUCCESS });
-//           },
-//             error => dispatch({ type: FETCHING_SINGLE_DISC_FAILURE })
-//         } else dispatch({ type: POSTING_OPINION_FAILURE });
-//       } catch (error) {
-//         error => dispatch({ type: POSTING_OPINION_FAILURE })
-//       }
-//     }
-//   };
-// };
+    // validate the opinion
+    if (!opinion.content || opinion.content.length < 10) {
+      dispatch({ type: POSTING_OPINION_FAILURE, payload: '请多输入些字数~' });
+    } else {
+      // call the api to post the opinion
+      try {
+        const postOpinion = discussionDetailApi.addOpinion()
+        let opinionRes = await postOpinion(opinion)
+        if (opinionRes && opinionRes.data && opinionRes.data._id) {
+          // fetch the discussion to refresh the opinion list
+          try {
+            const fetchDiscussionDetail = discussionDetailApi.fetchDiscussionDetail(discussionSlug)
+            let discussionDetail = await fetchDiscussionDetail()
+            if (discussionDetail && discussionDetail._id) {
+              dispatch({
+                type: FETCHING_DISCUSSIONS_DETAIL_SUCCESS,
+                payload: {
+                  discussionSlug,
+                  discussionDetail
+                }
+              })
+              dispatch({ type: POSTING_OPINION_SUCCESS });
+            } else {
+              dispatch({
+                type: FETCHING_DISCUSSIONS_DETAIL_FAILURE,
+                payload: 'No discussion detail data'
+              })
+            }
+          } catch (error) {
+            dispatch({
+              type: FETCHING_DISCUSSIONS_DETAIL_FAILURE,
+              payload: error
+            })
+          }
+        } else dispatch({
+          type: POSTING_OPINION_FAILURE,
+          payload: '评论失败...'
+        });
+      } catch (error) {
+        error => dispatch({
+          type: POSTING_OPINION_FAILURE,
+          payload: error
+        })
+      }
+    }
+  };
+};
 
 // /**
 //  * delete the discussion post

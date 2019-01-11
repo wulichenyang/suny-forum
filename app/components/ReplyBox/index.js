@@ -39,11 +39,15 @@ class ReplyBox extends Component {
   }
 }
 ReplyBox.defaultProps = {
-  style: {}
+  style: {},
+  header: (<h2>评论</h2>),
+  content: (<h2>回复</h2>)
 }
 
 ReplyBox.propTypes = {
   style: PropTypes.object,
+  header: PropTypes.any,
+  content: PropTypes.any,
 }
 
 export default ReplyBox

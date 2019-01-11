@@ -27,11 +27,7 @@ class RichEditor extends Component {
   // For reply
   _onChange(editorState) {
     this.setState({ editorState });
-
-  }
-
-  onSubmit() {
-    console.log(JSON.stringify(convertToRaw(this.state.editorState.getCurrentContent())))
+    this.props.onChange(JSON.stringify(convertToRaw(editorState.getCurrentContent())))
   }
 
   // For RichEditor
@@ -89,7 +85,8 @@ class RichEditor extends Component {
   render() {
     const {
       content,
-      readOnly
+      readOnly,
+      onSubmit,
     } = this.props
 
     const { editorState } = this.state;
@@ -140,7 +137,7 @@ class RichEditor extends Component {
 
           {!readOnly &&
             <Button
-              onClick={() => this.onSubmit()}
+              onClick={onSubmit}
             >
               回复
             </Button>
@@ -252,7 +249,7 @@ RichEditor.defaultProps = {
   content: '',
   style: {},
   readOnly: true,
-  onChange: () => { },
+  onChange: (content) => { },
   onSubmit: () => { }
 }
 
