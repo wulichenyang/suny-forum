@@ -166,8 +166,8 @@ function getBlockStyle(block) {
 }
 
 class StyleButton extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.onToggle = (e) => {
       e.preventDefault();
       this.props.onToggle(this.props.style);

@@ -1,13 +1,16 @@
 import React, { Component } from 'react'
 import { Link, hashHistory } from 'react-router'
 import NavList from './NavList'
+import UserMenu from './UserMenu'
+import PropTypes from 'prop-types';
 
 import './index.less'
 class Header extends Component {
   render() {
     const {
       forums,
-      currentForum
+      currentForum,
+      userinfo
     } = this.props
 
     return (
@@ -22,9 +25,24 @@ class Header extends Component {
             navList={forums}
           />
         </div>
+        <UserMenu 
+          userinfo={userinfo}
+        />
       </header>
     )
   }
+}
+
+Header.defaultProps = {
+  forums: [],
+  currentForum: '',
+  userinfo: {}
+}
+
+Header.propTypes = {
+  forums: PropTypes.array,
+  currentForu: PropTypes.string,
+  userinfo: PropTypes.object
 }
 
 export default Header

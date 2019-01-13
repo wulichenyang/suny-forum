@@ -8,13 +8,6 @@ import BoxWrapper from '@components/BoxWrapper'
 import './index.less'
 
 class ReplyBox extends Component {
-  componentDidMount() {
-
-  }
-
-  componentWillReceiveProps(nextProp) {
-
-  }
 
   render() {
     const {

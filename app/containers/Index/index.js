@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import Header from '@components/Header'
@@ -51,6 +51,7 @@ class Index extends Component {
 			currentForum,
 			fetchingForums,
 			fetchingForumsError,
+			userinfo,
 		} = this.props
 
 		return (
@@ -60,12 +61,13 @@ class Index extends Component {
 				>
 				</Loading>
 				{!fetchingForums && !fetchingForumsError &&
-					<div>
+					<Fragment>
 						<Header
 							forums={forums}
 							currentForum={currentForum}
+							userinfo={userinfo}
 						/>
-					</div>
+					</Fragment>
 				}
 				<main id="content">
 					{this.props.children}

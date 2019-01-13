@@ -56,13 +56,20 @@ const webpackConfigDev = {
     hot: true,
     host: '0.0.0.0',
     port: devPort,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000',
+        secure: false,
+        changeOrigin: true
+      }
+    }
   },
 }
 
 module.exports = merge({
   customizeArray(a, b, key) {
     // entry.main不合并，全部替换
-    if(key === 'entry.main') {
+    if (key === 'entry.main') {
       return b
     }
     return undefined

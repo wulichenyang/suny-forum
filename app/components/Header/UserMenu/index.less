@@ -1,0 +1,25 @@
+@import '~@styles/theme.less';
+
+.user-menu {
+  position: relative;
+  color: @nav-font;
+  margin-right: 20px;
+  .sign-trigger {
+    display: flex;
+    align-items: center;
+    height: 56px;
+    cursor: pointer;
+    transition: color .3s;
+    &:hover {
+      transition: color .3s;
+      color: @nav-font-hover;
+    }
+  }
+  .user-sub-menu {
+    position: absolute;
+    top: 56px;
+    right: 0;
+    z-index: 999;
+    background-color: @white;
+  }
+}

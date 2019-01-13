@@ -13,10 +13,10 @@ export const getUser = () => {
     dispatch({ type: START_FETCHING_USER })
     try {
       const userinfo = await userApi.fetchUser()
-      if (userinfo && userinfo.data && userinfo.data._id) {
+      if (userinfo && userinfo._id) {
         dispatch({
           type: FETCHING_USER_SUCCESS,
-          payload: userinfo.data
+          payload: userinfo
         })
       } else {
         dispatch({ type: FETCHING_USER_FAILURE })
