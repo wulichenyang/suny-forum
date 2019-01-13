@@ -19,6 +19,7 @@ class UserBrief extends Component {
 		} = this.props
 
     if(isMenu) {
+      // nav userMenu 信息内部的组件
       return (
         <div 
           className="user-brief"
@@ -30,7 +31,7 @@ class UserBrief extends Component {
             src={avatarUrl}
           >
           </Avatar>
-          <span className="username">{username}</span>
+          <span className="nav-username">{username}</span>
         </div>
       )
     } else {

@@ -51,6 +51,7 @@ class UserMenu extends Component {
       signout = () => { },
     }) => {
       if (showSubMenu) {
+        // 已登录
         if (authenticated) {
           return (
             <div
@@ -74,6 +75,7 @@ class UserMenu extends Component {
               </ul>
             </div>
           )
+          // 未登录
         } else {
           return (
             <div
@@ -81,6 +83,7 @@ class UserMenu extends Component {
             >
               <a
                 href="/api/user/authViaGitHub"
+                // toggle submenu
                 onClick={signinByGithub}
               >
                 By github
