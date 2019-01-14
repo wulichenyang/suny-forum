@@ -13,6 +13,7 @@ import {
 } from '@actions/discussionDetail'
 
 import './index.less'
+import { message } from 'antd';
 
 class DiscussionDetail extends Component {
 	componentDidMount() {
@@ -27,7 +28,7 @@ class DiscussionDetail extends Component {
 		getDiscussionDetail(discussion)
 	}
 
-	submitNewOpinion() {
+	async submitNewOpinion(resetContentCallback) {
 		const {
 			newOpinionContent,
 			discussionDetail,
@@ -45,7 +46,13 @@ class DiscussionDetail extends Component {
 			content: newOpinionContent
 		}
 		console.log(newOpinion, discussion)
-		addOpinion(newOpinion, discussion)
+		let res = await addOpinion(newOpinion, discussion)
+		if(res === true) {
+			resetContentCallback()
+			message.success('评论成功！')
+		} else {
+			message.error('评论失败！')
+		}
 	}
 
 	render() {
@@ -58,6 +65,7 @@ class DiscussionDetail extends Component {
 			fetchingDiscussionDetail,
 			fetchingDiscussionDetailError,
 			updateOpinionContent,
+			userinfo,
 		} = this.props
 
 		return (
@@ -84,17 +92,22 @@ class DiscussionDetail extends Component {
 				}
 
 				{ /* reply box */}
-				<ReplyBox
-					style={{ width: '60%', margin: "0 auto" }}
-					title="评论"
-					content={
-						<RichEditor
-							readOnly={false}
-							onChange={(content) => { updateOpinionContent(content) }}
-							onSubmit={() => this.submitNewOpinion()}
-						></RichEditor>
-					}
-				></ReplyBox>
+				{(userinfo.authenticated) ? (
+					<ReplyBox
+						style={{ width: '60%', margin: "0 auto" }}
+						title="评论"
+						content={
+							<RichEditor
+								readOnly={false}
+								onChange={(content) => { updateOpinionContent(content) }}
+								onSubmit={(resetContentCallback) => this.submitNewOpinion(resetContentCallback)}
+							></RichEditor>
+						}
+					></ReplyBox>
+				) : (
+						<p>请登录发表评论~</p>
+					)
+				}
 
 				{discussionDetail && discussionDetail[discussion] && discussionDetail[discussion].opinions && discussionDetail[discussion].opinions.length &&
 					<OpinionList
@@ -121,8 +134,7 @@ const mapStateToProps = (state, ownProps) => ({
 	postingOpinion: state.discussionDetail.postingOpinion,
 	newOpinionContent: state.discussionDetail.newOpinion,
 	postOpinionError: state.discussionDetail.postOpinionError,
-
-
+	userinfo: state.user
 	// currentForumSlug: state.forum.currentForum,
 	// currentForumInfo: selectedForumSelector(state),
 

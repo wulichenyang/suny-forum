@@ -40,6 +40,12 @@ class RichEditor extends Component {
     return false;
   }
 
+  _resetEditor() {
+    this.setState({
+      editorState: EditorState.createEmpty()
+    })
+  }
+
   _mapKeyToEditorCommand(e) {
     if (e.keyCode === 9 /* TAB */) {
       const newEditorState = RichUtils.onTab(
@@ -137,7 +143,7 @@ class RichEditor extends Component {
 
           {!readOnly &&
             <Button
-              onClick={onSubmit}
+              onClick={() => onSubmit(() => this._resetEditor())}
             >
               回复
             </Button>
@@ -250,7 +256,7 @@ RichEditor.defaultProps = {
   style: {},
   readOnly: true,
   onChange: (content) => { },
-  onSubmit: () => { }
+  onSubmit: (callback) => { }
 }
 
 RichEditor.propTypes = {

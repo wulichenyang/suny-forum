@@ -116,14 +116,17 @@ export const addOpinion = (opinion, discussionSlug) => {
     dispatch({ type: POSTING_OPINION_START });
 
     // validate the opinion
-    if (!opinion.content || opinion.content.length < 10) {
+    if (!opinion.content || opinion.content.length <= 2) {
       dispatch({ type: POSTING_OPINION_FAILURE, payload: '请多输入些字数~' });
     } else {
       // call the api to post the opinion
       try {
         const postOpinion = discussionDetailApi.addOpinion()
         let opinionRes = await postOpinion(opinion)
-        if (opinionRes && opinionRes.data && opinionRes.data._id) {
+        if (opinionRes && opinionRes._id) {
+          // succeed in posting opinion
+          dispatch({ type: POSTING_OPINION_SUCCESS });
+
           // fetch the discussion to refresh the opinion list
           try {
             const fetchDiscussionDetail = discussionDetailApi.fetchDiscussionDetail(discussionSlug)
@@ -143,6 +146,7 @@ export const addOpinion = (opinion, discussionSlug) => {
                 payload: 'No discussion detail data'
               })
             }
+            return true
           } catch (error) {
             dispatch({
               type: FETCHING_DISCUSSIONS_DETAIL_FAILURE,

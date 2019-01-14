@@ -32,7 +32,7 @@ class UserMenu extends Component {
     // userApi.authViaGitHub()
     this.toggleSubMenu()
   }
-  
+
   async signout() {
     let res = await userApi.signout();
     if (res.status === 0) {
@@ -49,6 +49,7 @@ class UserMenu extends Component {
       name = '大名',
       signinByGithub = () => { },
       signout = () => { },
+      toggleSubMenu = () => { },
     }) => {
       if (showSubMenu) {
         // 已登录
@@ -57,22 +58,17 @@ class UserMenu extends Component {
             <div
               className="user-sub-menu"
             >
-              <ul>
-                <li>
-                  <Link
-                    to={`/user/${name}`}
-                  >
-                    My Profile
+              <Link
+                to={`/user/${name}`}
+                onClick={toggleSubMenu}
+                >
+                My Profile
                   </Link>
-                </li>
-                <li>
-                  <a
-                    onClick={signout}
-                  >
-                    Sign out
+              <a
+                onClick={signout}
+                >
+                Sign out
                   </a>
-                </li>
-              </ul>
             </div>
           )
           // 未登录
@@ -107,7 +103,7 @@ class UserMenu extends Component {
 
     const signout = () => this.signout()
     const signinByGithub = () => this.signinByGithub()
-
+    const toggleSubMenu = () => this.toggleSubMenu()
     // 已登录
     if (authenticated) {
       return (
@@ -122,6 +118,7 @@ class UserMenu extends Component {
             showSubMenu,
             authenticated,
             name,
+            toggleSubMenu,
             signout
           })}
         </div>
