@@ -109,7 +109,7 @@ class RichEditor extends Component {
     return (
       <div
         className="RichEditor-root"
-        style={readOnly ? { border: 'none', padding: '0', marginTop: '-15px' } : { border: "1px solid #ddd", padding: '15px' }}
+        style={readOnly ? { border: 'none', padding: '0 10px', marginTop: '-15px' } : { border: "1px solid #ddd", padding: '15px', margin: '0 10px 10px 10px' }}
       >
         {!readOnly &&
           <Fragment>

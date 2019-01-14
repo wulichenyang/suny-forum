@@ -196,35 +196,53 @@ export const addOpinion = (opinion, discussionSlug) => {
 //   };
 // };
 
-// /**
-//  * delete an opinion
-//  * @param  {ObjectId} opinionId
-//  * @param  {String} discussionSlug
-//  * @return {action}
-//  */
-// export const deleteOpinion = (opinionId, discussionSlug) => {
-//   return (dispatch, getState) => {
-//     // show the loading message
-//     dispatch({ type: DELETE_OPINION_START, payload: opinionId });
-
-//     // call the api
-//     deleteOpinionApi(opinionId).then(
-//       data => {
-//         if (data.data.deleted) {
-
-//           // fetch the discussion again to refresh the opinions
-//           fetchSingleDiscussion(discussionSlug).then(
-//             data => {
-//               dispatch({ type: DELETE_OPINION_SUCCESS });
-//               dispatch({ type: FETCHING_SINGLE_DISC_SUCCESS, payload: data.data });
-//             },
-//             error => dispatch({ type: FETCHING_SINGLE_DISC_FAILURE })
-//           );
-
-//         }
-//         else { dispatch({ type: DELETE_OPINION_FAILURE }); }
-//       },
-//       error => dispatch({ type: DELETE_OPINION_FAILURE })
-//     );
-//   };
-// };
+/**
+ * delete an opinion
+ * @param  {ObjectId} opinionId
+ * @param  {String} discussionSlug
+ * @return {action}
+ */
+export const deleteOpinion = (opinionId, discussionSlug) => {
+  return async (dispatch, getState) => {
+    // show the loading message
+    dispatch({ type: DELETE_OPINION_START });
+    // call the delete api
+    const deleteOpinion = discussionDetailApi.deleteOpinion(opinionId)
+    let res = await deleteOpinion()
+    try {
+      if (res && res.deleted) {
+        // fetch the discussion to refresh the opinion list
+        try {
+          const fetchDiscussionDetail = discussionDetailApi.fetchDiscussionDetail(discussionSlug)
+          let discussionDetail = await fetchDiscussionDetail()
+          if (discussionDetail && discussionDetail._id) {
+            dispatch({
+              type: FETCHING_DISCUSSIONS_DETAIL_SUCCESS,
+              payload: {
+                discussionSlug,
+                discussionDetail
+              }
+            })
+            // succeed in posting opinion
+            dispatch({ type: DELETE_DISCUSSION_SUCCESS });
+          } else {
+            dispatch({
+              type: FETCHING_DISCUSSIONS_DETAIL_FAILURE,
+              payload: 'No discussion detail data'
+            })
+          }
+          return true
+        } catch (error) {
+          dispatch({
+            type: FETCHING_DISCUSSIONS_DETAIL_FAILURE,
+            payload: error
+          })
+        }
+      } else {
+        dispatch({ type: DELETE_OPINION_FAILURE, payload: 'Failed to delete the option' });
+      }
+    } catch (error) {
+      dispatch({ type: DELETE_OPINION_FAILURE, payload: error })
+    }
+  };
+};

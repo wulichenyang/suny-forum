@@ -8,10 +8,11 @@ import './index.less'
 class Delete extends Component {
   render() {
     const {
-      deleteAction
+      deleteAction,
+      style
     } = this.props
     return (
-      <div className="delete-wrapper">
+      <div className="delete-wrapper" style={style}>
         <div
           className="delete-inner"
           onClick={deleteAction}
@@ -26,12 +27,14 @@ class Delete extends Component {
 
 Delete.defaultProps = {
   deleteAction: () => {
-    console.log('删除')
-  }
+    console.log('删除评论')
+  },
+  style: {}
 }
 
 Delete.propTypes = {
   deleteAction: PropTypes.func,
+  style: PropTypes.object,
 }
 
 export default Delete

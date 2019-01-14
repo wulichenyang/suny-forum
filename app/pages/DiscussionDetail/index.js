@@ -10,6 +10,7 @@ import {
 	getDiscussionDetail,
 	updateOpinionContent,
 	addOpinion,
+	deleteOpinion
 } from '@actions/discussionDetail'
 
 import './index.less'
@@ -36,22 +37,38 @@ class DiscussionDetail extends Component {
 			params: {
 				discussion
 			},
+			userinfo,
 		} = this.props
 
 		const newOpinion = {
 			forum_id: discussionDetail[discussion].forum._id,
 			discussion_id: discussionDetail[discussion]._id,
-			// TODU
-			user_id: '5c24f47f72e93f8b02824959',
+			user_id: userinfo._id,
 			content: newOpinionContent
 		}
 		console.log(newOpinion, discussion)
 		let res = await addOpinion(newOpinion, discussion)
-		if(res === true) {
+		if (res === true) {
 			resetContentCallback()
 			message.success('评论成功！')
 		} else {
 			message.error('评论失败！')
+		}
+	}
+
+	async deleteOpinion(opinionId) {
+		const {
+			params: {
+				discussion
+			},
+			deleteOpinion,
+		} = this.props
+
+		let res = await deleteOpinion(opinionId, discussion)
+		if (res === true) {
+			message.success('删除评论成功！')
+		} else {
+			message.error('删除评论失败！')
 		}
 	}
 
@@ -105,7 +122,7 @@ class DiscussionDetail extends Component {
 						}
 					></ReplyBox>
 				) : (
-						<p>请登录发表评论~</p>
+						<p className="login-tip">请登录发表评论~</p>
 					)
 				}
 
@@ -113,7 +130,9 @@ class DiscussionDetail extends Component {
 					<OpinionList
 						style={{ width: '60%', margin: "20px auto 0 auto" }}
 						opinions={discussionDetail[discussion].opinions}
-						deleteAction={() => { alert('delete option') }}
+						deleteAction={(opinionId) => this.deleteOpinion(opinionId)}
+						currentUserId={userinfo._id}
+						currentUserRole={userinfo.role}
 					// deletingOption={this.props.deletingOption}
 					></OpinionList>
 				}
@@ -138,13 +157,18 @@ const mapStateToProps = (state, ownProps) => ({
 	// currentForumSlug: state.forum.currentForum,
 	// currentForumInfo: selectedForumSelector(state),
 
+	// delete an opinion
+
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => {
 	return {
 		// dispatching plain actions
 		...bindActionCreators({
-			getDiscussionDetail, updateOpinionContent, addOpinion,
+			getDiscussionDetail,
+			updateOpinionContent,
+			addOpinion,
+			deleteOpinion
 		}, dispatch)
 	};
 }

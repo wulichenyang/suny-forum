@@ -7,7 +7,7 @@ import Loading from '@components/Loading'
 import BoxWrapper from '@components/BoxWrapper'
 import UserBrief from '@components/UserBrief'
 import RichEditor from '@components/RichEditor'
-import Error from '@components/Error'
+import Delete from '@components/Delete'
 import { toPostTime } from '@utils/date';
 
 import './index.less'
@@ -23,7 +23,7 @@ class Opinion extends Component {
       userId,
       currentUserId,
       currentUserRole,
-      // deleteAction,
+      deleteAction,
       // deletingOpinion,
     } = this.props
 
@@ -31,10 +31,13 @@ class Opinion extends Component {
 
     // Opinion header
     const opinionHeader = ({
+      opinionId,
       avatarUrl,
       username,
       githubHandler,
       timeDisplay,
+      currentUserId,
+      userId,
     }) => {
       return (
         <div className="opinion-header">
@@ -43,8 +46,16 @@ class Opinion extends Component {
             username={username}
             githubHandler={userGitHandler}
           ></UserBrief>
-          <div className="date">
-            <span>{timeDisplay}</span>
+          <div className="opinion-header-right">
+            <div className="date">
+              <span>{timeDisplay}</span>
+            </div>
+            {(currentUserId === userId) &&
+              <Delete
+                style={{ marginLeft: '10px' }}
+                deleteAction={() => deleteAction(opinionId)}
+              />
+            }
           </div>
         </div>
       )
@@ -67,20 +78,23 @@ class Opinion extends Component {
       <article className="opinion">
         <BoxWrapper
           header={opinionHeader({
+            opinionId,
             avatarUrl,
             username,
             userGitHandler,
             timeDisplay,
+            currentUserId,
+            userId
           })}
           content={opinionContent({
             content
           })}
         >
         </BoxWrapper>
-        opinionId:    {opinionId} <br /><br />
+        {/* opinionId:    {opinionId} <br /><br />
         userId:    {userId} <br /><br />
         currentUserId:    {currentUserId} <br /><br />
-        currentUserRole:    {currentUserRole} <br /><br />
+        currentUserRole:    {currentUserRole} <br /><br /> */}
       </article>
     )
   }
@@ -93,10 +107,10 @@ Opinion.defaultProps = {
   userGitHandler: 'github',
   date: Moment(),
   avatarUrl: '/',
-  userId: '12345',
+  userId: '123451',
   currentUserId: '12345',
   currentUserRole: 'user',
-  // deleteAction: () => { },
+  deleteAction: () => { },
   // deletingOpinion: null
 }
 
@@ -110,7 +124,7 @@ Opinion.propTypes = {
   userId: PropTypes.string,
   currentUserId: PropTypes.string,
   currentUserRole: PropTypes.string,
-  // deleteAction: PropTypes.func,
+  deleteAction: PropTypes.func,
   // deletingOpinion: PropTypes.any
 }
 

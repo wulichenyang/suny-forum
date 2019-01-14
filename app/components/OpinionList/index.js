@@ -11,32 +11,34 @@ class OpinionList extends Component {
   render() {
     const {
       opinions,
-      // deleteAction,
+      deleteAction,
       // deletingOpinion,
+      currentUserId,
       style,
+      currentUserRole,
     } = this.props
     return (
       <section
-        className="opinion-list"
+      className="opinion-list"
         style={style}
-      >
+        >
         {opinions &&
           opinions.map(opinion => {
             return (
               <Opinion
-                key={opinion._id}
+              key={opinion._id}
                 opinionId={opinion._id}
                 content={opinion.content}
                 username={opinion.user.name}
                 userGitHandler={opinion.user.username}
                 date={opinion.date}
                 avatarUrl={opinion.user.avatarUrl}
-                userId={opinion.user._id}
-                currentUserId={opinion.currentUserId}
-                currentUserRole={opinion.currentUserRole}
-              // deleteAction={deleteAction}
-              // deletingOpinion={deletingOpinion}
-              >
+                userId={opinion.user_id}
+                currentUserId={currentUserId}
+                currentUserRole={currentUserRole}
+                deleteAction={deleteAction}
+                // deletingOpinion={deletingOpinion}
+                >
               </Opinion>
             )
           })
@@ -47,14 +49,18 @@ class OpinionList extends Component {
 }
 Opinion.defaultProps = {
   opinions: [],
-  // deleteAction: () =>{},
+  deleteAction: () => { },
+  currentUserId: '1234567',
   // deletingOpinion: null
+  currentUserRole: 'user',
 }
 
 Opinion.propTypes = {
   opinions: PropTypes.array,
-  // deleteAction: PropTypes.func,
+  deleteAction: PropTypes.func,
+  currentUserId: PropTypes.string,
   // deletingOpinion: PropTypes.any
+  currentUserRole: PropTypes.string,
 }
 
 export default OpinionList
