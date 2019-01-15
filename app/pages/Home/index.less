@@ -1,6 +1,20 @@
+@import '~@styles/theme.less';
+
 .home {
   min-height: 300px;
   display: flex;
   justify-content: center;
   align-items: center;
+  
+  .add-discussion.ant-btn {
+      position: absolute;
+      top: 55px;
+      right: 180px;
+      background-color: @button-pink;
+      border-color: @button-pink
+    }
+  .add-discussion.ant-btn:focus, .add-discussion.ant-btn:hover {
+    opacity: .8;
+  }
+  
 }
